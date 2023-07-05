@@ -3,7 +3,7 @@ import Layout from './components/Layout/Layout';
 import Products from './components/Shop/Products';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import { sendCartData } from './store/cartSlice';
+import { sendCartData, fetchCartData } from './store/cartSlice';
 
 function App() {
   const dispatch = useDispatch();
@@ -12,7 +12,13 @@ function App() {
   const cart = useSelector((state) => state.cart);
 
   useEffect(() => {
-    dispatch(sendCartData(cart));
+    dispatch(fetchCartData());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (cart.wasTouched) {
+      dispatch(sendCartData(cart));
+    }
   }, [cart, dispatch]);
 
   return (
