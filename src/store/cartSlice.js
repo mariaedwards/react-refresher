@@ -41,5 +41,27 @@ const cartSlice = createSlice({
   },
 });
 
+export const sendCartData = (cart) => {
+  return async (dispatch) => {
+    try {
+      const response = await fetch(
+        'https://react-refresher-476ad-default-rtdb.firebaseio.com/cart.json',
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(cart),
+        }
+      );
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
 export const cartActions = cartSlice.actions;
 export const cartReducer = cartSlice.reducer;
